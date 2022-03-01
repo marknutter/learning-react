@@ -1,24 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useState, useEffect} from 'react';
 
 function App() {
+  const [catFacts, setCatFacts] = useState("Test");
+  let interval
+  useEffect(
+    () => {
+      if (!interval) {
+        debugger
+        interval = setInterval(
+          () => {
+            fetch("https://catfact.ninja/fact", {
+              method: "get"
+            })
+            .then(response => response.json())
+            .then(jsonData => {setCatFacts(jsonData.fact); debugger})
+          }
+        , 5000)
+      }
+    },
+    [catFacts]
+  )
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p> Cool!</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        
+        <p>{catFacts}</p>
       </header>
     </div>
   );
