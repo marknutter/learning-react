@@ -7,20 +7,14 @@ function App() {
   let interval
   useEffect(
     () => {
-      if (!interval) {
-        debugger
         interval = setInterval(
           () => {
-            fetch("https://catfact.ninja/fact", {
-              method: "get"
-            })
-            .then(response => response.json())
-            .then(jsonData => {setCatFacts(jsonData.fact); debugger})
+            setCatFacts(Math.random())
           }
-        , 5000)
-      }
+        , 500)
+        return () => clearInterval(interval);
     },
-    [catFacts]
+    []
   )
   return (
     <div className="App">
